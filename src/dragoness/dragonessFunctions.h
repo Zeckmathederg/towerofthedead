@@ -1,0 +1,24 @@
+#ifndef DRAGONESS_FUNCTIONS_H
+#define DRAGONESS_FUNCTIONS_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <pthread.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include "dragonessEssentialVars.h"
+GLuint dragonessCompileShaders();
+int dragonessCreateProgramIDs(void);
+int dragonessInit();
+void dragonessSetScriptExecFunction();
+void dragonessCreateScriptThread(void);
+void dragonessBatchVertices(void);
+void dragonessBatchColors(void);
+void dragonessBatchTextures(void);
+void dragonessDebugMovement(void);
+void dragonessBeforeEveryFrame(void);
+void dragonessEnableBuffersForRender(void);
+void dragonessOnEveryFrame(void);
+void dragonessRender(void);
+void dragonessExit(void);
+#endif
