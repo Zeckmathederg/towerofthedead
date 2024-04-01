@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 project(towerofthedead)
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 	message(STATUS "Target is Windows")
@@ -74,19 +74,19 @@ if(NOT MINGW_W64)
 	endif()
 endif()
 if(MINGW_W64)
-	find_library(GLFW_LIBRARY NAMES glfw.dll HINTS ${DLLPATH})
+	find_library(GLFW_LIBRARY NAMES glfw3.dll HINTS ${DLLPATH})
 	if(NOT GLFW_LIBRARY)
 		message(FATAL_ERROR
 			"libglfw not found"
 		)
 	endif()
-	find_library(GLEW_LIBRARY NAMES GLEW.dll HINTS ${DLLPATH})
+	find_library(GLEW_LIBRARY NAMES glew32.dll HINTS ${DLLPATH})
 	if(NOT GLEW_LIBRARY)
 		message(FATAL_ERROR
 			"libglew not found"
 		)
 	endif()
-	find_library(OPENGL_LIBRARY NAMES OpenGL.dll HINTS ${DLLPATH})
+	find_library(OPENGL_LIBRARY NAMES opengl32.dll HINTS ${DLLPATH})
 	if(NOT OPENGL_LIBRARY)
 		message(FATAL_ERROR
 			"libOpenGL not found"
