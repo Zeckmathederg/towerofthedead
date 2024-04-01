@@ -26,13 +26,6 @@ if(MINGW_W64)
 	set(CMAKE_EXE_LINKER_FLAGS
 		"${CMAKE_EXE_LINKER_FLAGS} -Lvendor/windows/x86_64/lib/"
 	)
-	set(EXTRA_LIBS gdi32)
-	find_library(GDI32_LIBARY gdi32)
-	if(NOT GDI32_LIBRARY)
-		message(FATAL_ERROR
-			"gdi32 library not found, necessary for OpenGL w/ Windows"
-		)
-	endif()
 	set(WINDRES
 		"$ENV{MINGW_PREFIX}/bin/${CMAKE_C_COMPILER_PREFIX}-windres"
 	)
@@ -100,6 +93,3 @@ target_link_libraries(towerofthedead ${OPENGL_LIBRARY})
 include_directories(${GLEW_INCLUDE_DIR})
 include_directories(${GLFW_INCLUDE_DIR})
 include_directories(${CGLM_INCLUDE_DIR})
-if(MINGW_W64)
-	target_link_libraries(towerofthedead ${EXTRA_LIBS})
-endif()
