@@ -16,9 +16,9 @@ cmake -DCMAKE_INSTALL_PREFIX=[prefix]
 ```
 ### To build on Linux for Windows
 ```Bash
-cmake . -DCMAKE_TOOLCHAIN_FILE=w[32 or 64, only 64 is supported] && make && make install
+cmake . -DCMAKE_TOOLCHAIN_FILE=w[32 or 64, only 64 is supported].cmake && make && make install
 # To change the default prefix from /usr/local to whatever of your choosing:
-cmake -DCMAKE_INSTALL_PREFIX=[prefix] -DCMAKE_TOOLCHAIN_FILE=w64
+cmake -DCMAKE_INSTALL_PREFIX=[prefix] -DCMAKE_TOOLCHAIN_FILE=w64.cmake
 # Making a DESTDIR install is recommended as all necessary DLLs will be installed in same dir
 make DESTDIR=$PWD/[dirname] install
 ```
