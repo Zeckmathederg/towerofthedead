@@ -1,0 +1,8 @@
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+towerofthedead
+towerofthedead.exe
+*.o
+*.o.d
