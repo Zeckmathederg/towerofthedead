@@ -23,18 +23,22 @@ if(CMAKE_SYSTEM_NAME MATCHES "Windows")
 	endif()
 endif()
 if(MINGW_W64)
+	set(DLLPATH
+		"vendor/windows/${DLLARCH}/lib"
+	)
 	set(CMAKE_EXE_LINKER_FLAGS
-		"${CMAKE_EXE_LINKER_FLAGS} -Lvendor/windows/x86_64/lib/"
+		"${CMAKE_EXE_LINKER_FLAGS} -L{DLLPATH}"
 	)
 	set(WINDRES
-		"$ENV{MINGW_PREFIX}/bin/${CMAKE_C_COMPILER_PREFIX}-windres"
+		"${MINGW_PREFIX}-windres"
 	)
-	find_program(WINDRES_PROGRAM WINDRES)
+	find_program(WINDRES_PROGRAM "${MINGW_PREFIX}-windres")
 	if(NOT WINDRES_PROGRAM)
 		message(FATAL_ERROR
 			"windres not found, necessary for compiling rc files"
 		)
 	endif()
+	message(STATUS "Check for windres: ${WINDRES}")
 	add_custom_command(
 		OUTPUT totd-pubinfo.o
 		COMMAND ${WINDRES} -o totd-pubinfo.o src/totd-pubinfo.rc
@@ -43,29 +47,51 @@ if(MINGW_W64)
 	)
 	list(APPEND SOURCES ${CMAKE_CURRENT_BINARY_DIR}/totd-pubinfo.o)
 endif()
-find_library(M_LIBRARY m)
-if(NOT M_LIBRARY)
-	message(FATAL_ERROR
-		"libm not found"
-	)
+if(NOT MINGW_W64)
+	find_library(M_LIBRARY m)
+	if(NOT M_LIBRARY)
+		message(FATAL_ERROR
+			"libm not found"
+		)
+	endif()
+	find_library(GLFW_LIBRARY glfw)
+	if(NOT GLFW_LIBRARY)
+		message(FATAL_ERROR
+			"libglfw not found"
+		)
+	endif()
+	find_library(GLEW_LIBRARY GLEW)
+	if(NOT GLEW_LIBRARY)
+		message(FATAL_ERROR
+			"libglew not found"
+		)
+	endif()
+	find_library(OPENGL_LIBRARY OpenGL)
+	if(NOT OPENGL_LIBRARY)
+		message(FATAL_ERROR
+			"libOpenGL not found"
+		)
+	endif()
 endif()
-find_library(GLFW_LIBRARY glfw)
-if(NOT GLFW_LIBRARY)
-	message(FATAL_ERROR
-		"libglfw not found"
-	)
-endif()
-find_library(GLEW_LIBRARY GLEW)
-if(NOT GLEW_LIBRARY)
-	message(FATAL_ERROR
-		"libglew not found"
-	)
-endif()
-find_library(OPENGL_LIBRARY OpenGL)
-if(NOT OPENGL_LIBRARY)
-	message(FATAL_ERROR
-		"libOpenGL not found"
-	)
+if(MINGW_W64)
+	find_library(GLFW_LIBRARY NAMES glfw.dll HINTS ${DLLPATH})
+	if(NOT GLFW_LIBRARY)
+		message(FATAL_ERROR
+			"libglfw not found"
+		)
+	endif()
+	find_library(GLEW_LIBRARY NAMES GLEW.dll HINTS ${DLLPATH})
+	if(NOT GLEW_LIBRARY)
+		message(FATAL_ERROR
+			"libglew not found"
+		)
+	endif()
+	find_library(OPENGL_LIBRARY NAMES OpenGL.dll HINTS ${DLLPATH})
+	if(NOT OPENGL_LIBRARY)
+		message(FATAL_ERROR
+			"libOpenGL not found"
+		)
+	endif()
 endif()
 find_path(GLEW_INCLUDE_DIR NAMES GL/glew.h)
 if(NOT GLEW_INCLUDE_DIR)
