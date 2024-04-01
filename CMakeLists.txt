@@ -119,3 +119,15 @@ target_link_libraries(towerofthedead ${OPENGL_LIBRARY})
 include_directories(${GLEW_INCLUDE_DIR})
 include_directories(${GLFW_INCLUDE_DIR})
 include_directories(${CGLM_INCLUDE_DIR})
+install(TARGETS towerofthedead
+	DESTINATION bin
+)
+if(MINGW_W64)
+	install(FILES
+		${GLFW_LIBRARY}
+		${GLEW_LIBRARY}
+		${OPENGL_LIBRARY}
+		"${DLLPATH}/libwinpthread-1.dll"
+		DESTINATION bin
+	)
+endif()
