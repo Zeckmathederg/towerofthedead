@@ -10,13 +10,28 @@ I now have incorporated CMake for this project and removed it from autoconf and 
 ### To build on Linux
 ```Bash
 # Please run in the top directory
-cmake . && make && make install
+cmake .
+make
+make install
+# To change the default prefix from /usr/local to whatever of your choosing:
+cmake -DCMAKE_INSTALL_PREFIX=[prefix]
+```
+### To build on Linux, on amd64 building for i686
+```Bash
+# Please run in the top directory
+CC="gcc -m32" PKG_CONFIG_PATH=/usr/lib32/pkgconfig \
+cmake .
+make
+make install
 # To change the default prefix from /usr/local to whatever of your choosing:
 cmake -DCMAKE_INSTALL_PREFIX=[prefix]
 ```
 ### To build on Linux for Windows
 ```Bash
-cmake . -DCMAKE_TOOLCHAIN_FILE=w[32 or 64, only 64 is supported].cmake && make && make install
+# Please run in the top directory
+cmake . -DCMAKE_TOOLCHAIN_FILE=w[32 or 64, only 64 is supported].cmake
+make
+make install
 # To change the default prefix from /usr/local to whatever of your choosing:
 cmake -DCMAKE_INSTALL_PREFIX=[prefix] -DCMAKE_TOOLCHAIN_FILE=w64.cmake
 # Making a DESTDIR install is recommended as all necessary DLLs will be installed in same dir
